@@ -14,10 +14,6 @@ export const CardProvider = (props) => {
   const [draggedCards, setDragged] = useState([]);
   const [currentCard, setCurrentCard] = useState(null);
 
-  useEffect(() => {
-    console.log(currentCard);
-  }, [currentCard]);
-
   return (
     <Cardholder.Provider
       value={[

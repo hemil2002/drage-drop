@@ -4,7 +4,6 @@ import { Cardholder } from "../CardProvider";
 
 export const DragArea = () => {
   const [cards] = useContext(Cardholder);
-  // console.log(cards);
   return (
     <div className="first_Part">
       <h2>DragArea</h2>

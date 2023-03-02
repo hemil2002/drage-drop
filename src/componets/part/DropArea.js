@@ -1,6 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Card } from "../Card";
 import { Cardholder } from "../CardProvider";
+
+const insert = (arr, index, newItem) => [
+  ...arr.slice(0, index),
+  newItem,
+  ...arr.slice(index),
+];
 
 export const DropArea = () => {
   const [
@@ -16,29 +22,42 @@ export const DropArea = () => {
 
   const [screenY, setScreenY] = useState(0);
 
-  // useEffect(()=>{
-  //   console.log(currentCard)
-  // },[currentCard])
-
   const handleDrop = (e) => {
-    if (onDragging && draggedCards.length < 11) {
-      return setDragged([...draggedCards, onDragging]);
-    }
+    let abc = Number((screenY / 95).toString().split(".")[0]);
+    const position = abc > 3 ? abc : abc - 1;
+    let temp = draggedCards
+      ?.filter((card) => {
+        if (currentCard?.id == card?.id) {
+          return false;
+        }
+        return true;
+      })
+      .map((card, index) => {
+        return {
+          ...card,
+          id: index,
+        };
+      });
 
-    console.log(currentCard);
-
-    console.log(screenY / 82);
     if (currentCard) {
+      return setDragged(
+        insert(temp, position, { ...currentCard, id: draggedCards.length })
+      );
+    } else if (onDragging && draggedCards.length < 11) {
+      return setDragged(
+        insert(draggedCards, position, {
+          ...onDragging,
+          id: draggedCards.length,
+        })
+      );
     }
-    // console.log(draggedCards)
-    // console.log(onDragging);
   };
 
   const dragOver = (e) => {
-    // console.log(e.screenY)
     setScreenY(e.screenY);
     e.preventDefault();
   };
+
 
   return (
     <div className="second_Part">
@@ -48,7 +67,7 @@ export const DropArea = () => {
         onDrop={(e) => handleDrop(e)}
         onDragOver={(e) => dragOver(e)}
       >
-        {draggedCards.map((card, index) => {
+        {draggedCards?.map((card, index) => {
           return (
             <Card
               key={index}

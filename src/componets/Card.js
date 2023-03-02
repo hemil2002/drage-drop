@@ -11,27 +11,26 @@ export const Card = (props) => {
     setDragging,
     currentCard,
     setCurrentCard,
+    tell,
+    setTell,
   ] = useContext(Cardholder);
 
   const handleDrag = (e, elemId) => {
     setDragging(elemId);
-    setCurrentCard(elemId);
-  };
 
-  const handeleClick = () => {
     if (props.place == "drop") {
       setCurrentCard(props.card);
     } else {
       setCurrentCard(null);
     }
   };
+
   return (
     <div
       className="card"
       draggable="true"
       onDrag={(e) => {
-        handeleClick()
-        handleDrag(e, props.dragElem)
+        handleDrag(e, props.dragElem);
       }}
       style={{ color: "black" }}
     >
